@@ -100,23 +100,16 @@ import {
               {viewedProfile}
             </Typography>
           </FlexBetween>
-          <FlexBetween mb="0.5rem">
+          <FlexBetween>
             <Typography color={medium}>Impressions:</Typography>
             <Typography color={main} fontWeight="500">
               {impressions}
-            </Typography>
-          </FlexBetween>
-          <FlexBetween>
-            <Typography color={medium}>Followers:</Typography>
-            <Typography color={main} fontWeight="500">
-              {followers}
             </Typography>
           </FlexBetween>
         </Box>
   
         <Divider />
   
-        {/* FOURTH ROW */}
         <Box p="1rem 0">
           <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">
             Social Profiles
