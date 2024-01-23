@@ -46,6 +46,15 @@ import {
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost }));
     };
+
+    const isUrl = (path) => {
+      try {
+        new URL(path);
+        return true;
+      } catch (_) {
+        return false;  
+      }
+    };
   
     return (
       <WidgetWrapper m="2rem 0">
@@ -64,7 +73,7 @@ import {
             height="auto"
             alt="post"
             style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-            src={`${picturePath}`}
+            src={isUrl(picturePath) ? picturePath : `/assets/${picturePath}`}
           />
         )}
         <FlexBetween mt="0.25rem">
