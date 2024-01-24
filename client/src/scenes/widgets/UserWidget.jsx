@@ -43,7 +43,6 @@ import {
       lastName,
       location,
       occupation,
-      followers,
       viewedProfile,
       impressions,
       friends,
