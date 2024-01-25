@@ -48,14 +48,13 @@ import {
   return (
     <WidgetWrapper>
       <Box display="flex" flexDirection="row" justifyContent="center" gap="2rem">
-        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="0.5rem">
+        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="1rem">
           <UserImage image={picturePath} size="200px"/>
-          <Typography variant="h3" color={dark} fontWeight="500">
+          <Typography variant="h4" color={dark} fontWeight="500">
               {firstName} {lastName}
             </Typography>
-          <Typography variant="h5" fontWeight="500">{friends.length} Friends</Typography>
         </Box>
-        <Box ml={2} display="flex" flexDirection="row" gap="3rem">
+        <Box ml={2} display="flex" flexDirection="row" justifyContent="center" alignItems="center" gap="3rem">
           <Box>
             <Box p="1rem 0">
                 <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
@@ -68,20 +67,28 @@ import {
               </Box>
             </Box>
             <Divider />      
-            <Box p="1rem 0">
-            <Box display="flex" gap="2rem" mb="0.5rem">
-                <Typography color={medium}>Viewed Your Profile:</Typography>
-                <Typography color={main} fontWeight="500">
-                {viewedProfile}
-                </Typography>
-            </Box>
-            <Box display="flex" justifyContent="space-between">
-                <Typography color={medium}>Impressions:</Typography>
-                <Typography color={main} fontWeight="500">
-                {impressions}
-                </Typography>
-            </Box>
-            </Box>
+          <Box p="1rem 0">
+          <Box display="flex" justifyContent="space-between" alignItems="center" mb="0.5rem">
+            <Box width={200}>
+              <Typography color={medium}>Viewed Your Profile:</Typography>
+          </Box>
+          <Box>
+            <Typography color={main} fontWeight="500">
+              {viewedProfile}
+            </Typography>
+          </Box>
+        </Box>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Box width={200}>
+            <Typography color={medium}>Impressions:</Typography>
+          </Box>
+        <Box>
+          <Typography color={main} fontWeight="500">
+            {impressions}
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
           </Box>
           <Box p="1rem 0">
             <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">

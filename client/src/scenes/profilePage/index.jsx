@@ -6,10 +6,12 @@ import Navbar from "scenes/navbar";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import ProfileUserWidget from "scenes/widgets/ProfileUserWidget";
+import MyPostWidget from "scenes/widgets/MyPostWidget";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const { userId } = useParams();
+  const loggedInUserId = useSelector((state) => state.user._id);
   const token = useSelector((state) => state.token);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
@@ -33,10 +35,12 @@ const ProfilePage = () => {
       <Navbar />
       <Box
         width="100%"
+        maxWidth="1200px"
         padding="2rem 6%"
         display="flex"
         flexDirection="column"
         justifyContent="center"
+        margin="auto"
       >
         <ProfileUserWidget userId={userId} picturePath={user.picturePath} />
         <Box />
@@ -46,14 +50,15 @@ const ProfilePage = () => {
           gap="2rem"
         >
           {isNonMobileScreens && (
-            <Box margin="2rem 0"flexBasis="30%">
+            <Box width="500px" margin="2rem 0">
               <FriendListWidget userId={userId} />
             </Box>
           )}
-          <Box flexBasis={isNonMobileScreens ? "70%" : "100%"}>
-            <PostsWidget userId={userId} isProfile />
-          </Box>
+        <Box flexBasis={isNonMobileScreens ? "70%" : "100%"} margin={loggedInUserId === userId ? "2rem 0" : "0"}>
+          {loggedInUserId === userId && <MyPostWidget picturePath={user.picturePath}/>}
+          <PostsWidget userId={userId} isProfile />
         </Box>
+</Box>
       </Box>
     </Box>
   );

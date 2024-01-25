@@ -22,6 +22,7 @@ import {
     userPicturePath,
     likes,
     comments,
+    isProfile,
   }) => {
     const [isComments, setIsComments] = useState(false);
     const dispatch = useDispatch();
@@ -63,6 +64,7 @@ import {
           name={name}
           subtitle={location}
           userPicturePath={userPicturePath}
+          showAddFriendButton={!isProfile}
         />
         <Typography color={main} sx={{ mt: "1rem" }}>
           {description}
