@@ -9,6 +9,7 @@ import {
   import WidgetWrapper from "components/WidgetWrapper";
   import { useSelector } from "react-redux";
   import { useEffect, useState } from "react";
+  import FriendProfile from "components/FriendProfile";
   
   const ProfileUserWidget = ({ userId, picturePath }) => {
     const [user, setUser] = useState(null);
@@ -42,9 +43,8 @@ import {
       occupation,
       viewedProfile,
       impressions,
-      friends,
     } = user;
-  
+    
   return (
     <WidgetWrapper>
       <Box display="flex" flexDirection="row" justifyContent="center" gap="2rem">
@@ -54,7 +54,7 @@ import {
               {firstName} {lastName}
             </Typography>
         </Box>
-        <Box ml={2} display="flex" flexDirection="row" justifyContent="center" alignItems="center" gap="3rem">
+        <Box ml={2} display="flex" flexDirection="row" justifyContent="center" gap="3rem">
           <Box>
             <Box p="1rem 0">
                 <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
@@ -70,7 +70,7 @@ import {
           <Box p="1rem 0">
           <Box display="flex" justifyContent="space-between" alignItems="center" mb="0.5rem">
             <Box width={200}>
-              <Typography color={medium}>Viewed Your Profile:</Typography>
+              <Typography color={medium}>View:</Typography>
           </Box>
           <Box>
             <Typography color={main} fontWeight="500">
@@ -87,6 +87,9 @@ import {
             {impressions}
           </Typography>
         </Box>
+      </Box>
+      <Box display="flex" justifyContent="flex-start">
+        <FriendProfile friendId={userId}/>
       </Box>
     </Box>
           </Box>

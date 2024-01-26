@@ -20,7 +20,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, showAddFriendButton
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
 
-  const [isFriend, setIsFriend] = useState(Boolean(friends.find((friend) => friend._id === friendId)));
+  const [isFriend, setIsFriend] = useState(Array.isArray(friends) && Boolean(friends.find((friend) => friend._id === friendId)));
   
   const patchFriend = async () => {
     if (_id === friendId) {
