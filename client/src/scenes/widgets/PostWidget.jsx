@@ -4,13 +4,14 @@ import {
     FavoriteOutlined,
     ShareOutlined,
   } from "@mui/icons-material";
-  import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
-  import FlexBetween from "components/FlexBetween";
-  import Friend from "components/Friend";
-  import WidgetWrapper from "components/WidgetWrapper";
-  import { useState } from "react";
+  import { Box, Divider, IconButton, Typography, useTheme, TextField, Button } from "@mui/material";
+  import FlexBetween from "../../components/FlexBetween";
+  import Friend from "../../components/Friend";
+  import WidgetWrapper from "../../components/WidgetWrapper";
+  import { useEffect, useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
-  import { setPost } from "state";
+  import { setPost } from "../../state";
+  import UserImage from "../../components/UserImage";
   
   const PostWidget = ({
     postId,
@@ -26,14 +27,32 @@ import {
   }) => {
     const [isComments, setIsComments] = useState(false);
     const dispatch = useDispatch();
+    const [users, setUsers] = useState({});
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
     const isLiked = Boolean(likes[loggedInUserId]);
     const likeCount = Object.keys(likes).length;
+    const [newComment, setNewComment] = useState('');
   
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
+    const light = palette.neutral.light;
+
+    const getUser = async (userId) => {
+      if (!users[userId]) {
+        const response = await fetch(`/users/${userId}`, {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await response.json();
+        setUsers((prevUsers) => ({ ...prevUsers, [userId]: data }));
+      }
+    };
+  
+    useEffect(() => {
+      comments.forEach((comment) => getUser(comment.userId));
+    }, [comments]);
   
     const patchLike = async () => {
       const response = await fetch(`/posts/${postId}/like`, {
@@ -47,6 +66,20 @@ import {
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost }));
     };
+
+    const postComment = async () => {
+      const response = await fetch(`/posts/${postId}/comments`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: loggedInUserId, content: newComment }),
+      });
+      const updatedPost = await response.json();
+      dispatch(setPost({ post: updatedPost }));
+      setNewComment('');
+    };    
 
     const isUrl = (path) => {
       try {
@@ -104,20 +137,34 @@ import {
           </IconButton>
         </FlexBetween>
         {isComments && (
-          <Box mt="0.5rem">
-            {comments.map((comment, i) => (
-              <Box key={`${name}-${i}`}>
-                <Divider />
-                <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                  {comment}
-                </Typography>
-              </Box>
-            ))}
-            <Divider />
+  <Box display="flex" flexDirection="column" gap="1.2rem" mt="0.5rem">
+    {comments.map((comment, i) => {
+      const user = users[comment.userId];
+      return user ? (
+        <Box key={`${comment.userId}-${i}`}>
+          <Box display="flex" alignItems="center" backgroundColor={light} padding="0.5rem" borderRadius="10px">
+            <UserImage image={user.picturePath} size="30px" />
+            <Typography sx={{ color: main, m: "0.5rem", pl: "1rem" }}>
+              <strong>{user.firstName} {user.lastName}</strong>: {comment.content}
+            </Typography>
           </Box>
-        )}
-      </WidgetWrapper>
-    );
-  };
-  
-  export default PostWidget;
+        </Box>
+      ) : null;
+    })}
+  <Box display="flex" alignItems="center" gap="1rem">
+    <TextField
+      fullWidth
+      value={newComment}
+      onChange={(e) => setNewComment(e.target.value)}
+      label="Write a comment..."
+      InputProps={{ sx: { borderRadius: 30 } }}
+    />
+    <Button onClick={postComment} sx={{ color: palette.background.alt, backgroundColor: palette.primary.main, width:"130px", height: "40px"}}>Post</Button>
+  </Box>
+  </Box>
+  )}
+  </WidgetWrapper>
+  );
+}
+
+export default PostWidget;

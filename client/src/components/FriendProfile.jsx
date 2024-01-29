@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import DoneIcon from '@mui/icons-material/Done';
 import { useDispatch, useSelector } from "react-redux";
-import { setFriends } from "state";
+import { setFriends } from "../state";
 
 const FriendProfile = ({ friendId }) => {
   const dispatch = useDispatch();
