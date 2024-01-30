@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,6 +40,10 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, showAddFriendButton
     dispatch(setFriends({ friends: data }));
     setIsFriend(!isFriend);
   };
+
+  useEffect(() => {
+    setIsFriend(Array.isArray(friends) && Boolean(friends.find((friend) => friend._id === friendId)));
+  }, [friends, friendId]);
 
   return (
     <FlexBetween>

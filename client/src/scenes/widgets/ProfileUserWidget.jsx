@@ -70,7 +70,7 @@ import {
           <Box p="1rem 0">
           <Box display="flex" justifyContent="space-between" alignItems="center" mb="0.5rem">
             <Box width={200}>
-              <Typography color={medium}>View:</Typography>
+              <Typography color={medium}>Views:</Typography>
           </Box>
           <Box>
             <Typography color={main} fontWeight="500">

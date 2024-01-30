@@ -6,6 +6,7 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  CircularProgress,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -77,12 +78,22 @@ const Form = () => {
     }
   };
 
+  const [loginError, setLoginError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const login = async (values, onSubmitProps) => {
+    setIsLoading(true);
     const loggedInResponse = await fetch("/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     });
+
+    if (!loggedInResponse.ok) {
+      setLoginError("Incorrect email or password. Please try again.");
+      return;
+    }
+
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
     if (loggedIn) {
@@ -94,6 +105,7 @@ const Form = () => {
       );
       navigate("/home");
     }
+    setIsLoading(false);
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
@@ -207,7 +219,22 @@ const Form = () => {
                 </Box>
               </>
             )}
-
+              {isLoading && (
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  zIndex: 9999,
+                }}>
+                  <div><CircularProgress /></div>
+                </div>
+              )}  
             <TextField
               label="Email"
               onBlur={handleBlur}
@@ -230,7 +257,7 @@ const Form = () => {
               sx={{ gridColumn: "span 4" }}
             />
           </Box>
-
+          {loginError && <div style={{ color: 'red', marginTop:"10px", fontSize: "0.9rem"}}>{loginError}</div>}        
           <Box>
             <Button
               fullWidth
@@ -270,5 +297,6 @@ const Form = () => {
     </Formik>
   );
 };
+
 
 export default Form;
