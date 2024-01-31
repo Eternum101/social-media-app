@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
+import UserImage from "../../components/UserImage";
 
 const Navbar = () => {
     const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -83,22 +84,18 @@ const Navbar = () => {
                         <Select 
                             value={fullName}
                             sx={{
-                                backgroundColor: neutralLight,
-                                width: "150px",
+                                width: "100px",
                                 borderRadius: "0.25rem", 
                                 padding: "0.25rem 1rem",
                                 "& .MuiSvgIcon-root": {
                                     pr: "0.25rem",
                                     width: "3rem"
                                 },
-                                "& .MuiSelect-select.focus": {
-                                    backgroundColor: neutralLight
-                                }
                             }}
                             input={<InputBase/>}
                             >
                             <MenuItem value={fullName}>
-                                <Typography>{fullName}</Typography>
+                                <UserImage image={user.picturePath} size="40px" />
                             </MenuItem>
                             <MenuItem onClick={() => dispatch(setLogout())}>
                                 Log Out
@@ -135,10 +132,9 @@ const Navbar = () => {
                             <Select 
                                 value={fullName}
                                 sx={{
-                                    backgroundColor: neutralLight,
                                     width: "150px",
                                     borderRadius: "0.25rem", 
-                                    padding: "0.25rem 1rem",
+                                    padding: "0.25rem 3rem",
                                     "& .MuiSvgIcon-root": {
                                     pr: "0.25rem",
                                     width: "3rem"
@@ -150,7 +146,7 @@ const Navbar = () => {
                                 input={<InputBase/>}
                                 >
                                 <MenuItem value={fullName}>
-                                    <Typography>{fullName}</Typography>
+                                    <UserImage image={user.picturePath} size="50px" />
                                 </MenuItem>
                                 <MenuItem onClick={() => dispatch(setLogout())}>
                                     Log Out

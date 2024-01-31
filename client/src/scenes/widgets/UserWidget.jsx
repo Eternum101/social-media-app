@@ -11,6 +11,7 @@ import {
   import { useSelector } from "react-redux";
   import { useEffect, useState } from "react";
   import { useNavigate } from "react-router-dom";
+  import Loading from "../../components/Loading";
   
   const UserWidget = ({ userId, picturePath }) => {
     const [user, setUser] = useState(null);
@@ -20,14 +21,18 @@ import {
     const dark = palette.neutral.dark;
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
+
+    const [isLoading, setIsLoading] = useState(false);
   
     const getUser = async () => {
+      setIsLoading(true);
       const response = await fetch(`/users/${userId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
       setUser(data);
+      setIsLoading(false);
     };
   
     useEffect(() => {
@@ -50,6 +55,9 @@ import {
   
     return (
       <WidgetWrapper>
+        {isLoading && (
+          <Loading />
+        )}  
         <FlexBetween
           gap="0.5rem"
           pb="1.1rem"

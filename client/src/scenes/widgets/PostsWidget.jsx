@@ -1,29 +1,36 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../state";
 import PostWidget from "./PostWidget";
+import Loading from "../../components/Loading";
 
 const PostsWidget = ({ userId, isProfile = false}) => {
     const dispatch = useDispatch();
     const posts = useSelector((state) => state.posts);
     const token = useSelector((state) => state.token);
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const getPosts = async () => {
+        setIsLoading(true);
         const response = await fetch("/posts", {
             method: "GET",
             headers: { Authorization: `Bearer ${token}`},
         });
         const data = await response.json()
         dispatch(setPosts({ posts: data }));
+        setIsLoading(false);
     }
 
     const getUserPosts = async () => {
+        setIsLoading(true);
         const response = await fetch(`/posts/${userId}`, {
             method: "GET",
             headers: { Authorization: `Bearer ${token}`},
         });
         const data = await response.json()
         dispatch(setPosts({ posts: data }));
+        setIsLoading(false);
     }
 
     useEffect(() => {
@@ -31,11 +38,14 @@ const PostsWidget = ({ userId, isProfile = false}) => {
             getUserPosts();
         } else {
             getPosts();
-        }
+        } 
     }, [])
 
     return (
         <>
+        {isLoading && (
+          <Loading />
+        )}  
           {posts.map(
             ({
               _id,

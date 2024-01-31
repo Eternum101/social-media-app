@@ -24,6 +24,7 @@ import {
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPosts } from "../../state";
+  import Loading from "../../components/Loading";
 
   const MyPostWidget = ({ picturePath }) => {
     const dispatch = useDispatch();
@@ -37,7 +38,10 @@ import {
     const mediumMain = palette.neutral.mediumMain; 
     const medium = palette.neutral.medium;
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const handlePost = async() => {
+        setIsLoading(true);
         const formData = new FormData();
         formData.append("userId", _id);
         formData.append("description", post);
@@ -54,11 +58,15 @@ import {
         const posts = await response.json();
         dispatch(setPosts({ posts }));
         setImage(null);
-        setPost(""); 
+        setPost("");
+        setIsLoading(false); 
     }
 
     return (
         <WidgetWrapper>
+          {isLoading && (
+            <Loading />
+          )}  
             <FlexBetween gap="1.5rem">
                 <UserImage image={picturePath} />
                 <InputBase placeholder="What's on your mind..." onChange={(e) => setPost(e.target.value)} value={post} sx={{ width: "100%", backgroundColor: palette.neutral.light, borderRadius: "2rem", padding: "1rem 2rem"}}/>

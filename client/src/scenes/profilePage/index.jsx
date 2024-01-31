@@ -7,6 +7,7 @@ import FriendListWidget from "../widgets/FriendListWidget";
 import PostsWidget from "../widgets/PostsWidget";
 import ProfileUserWidget from "../widgets/ProfileUserWidget";
 import MyPostWidget from "../widgets/MyPostWidget";
+import Loading from "../../components/Loading";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -15,13 +16,17 @@ const ProfilePage = () => {
   const token = useSelector((state) => state.token);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const getUser = async () => {
+    setIsLoading(true);
     const response = await fetch(`/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
     setUser(data);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -32,6 +37,9 @@ const ProfilePage = () => {
 
   return (
     <Box>
+      {isLoading && (
+        <Loading />
+      )}  
       <Navbar />
       <Box
         width="100%"

@@ -4,7 +4,7 @@ import {
     FavoriteOutlined,
     ShareOutlined,
   } from "@mui/icons-material";
-  import { Box, Divider, IconButton, Typography, useTheme, TextField, Button } from "@mui/material";
+  import { Box, IconButton, Typography, useTheme, TextField, Button } from "@mui/material";
   import FlexBetween from "../../components/FlexBetween";
   import Friend from "../../components/Friend";
   import WidgetWrapper from "../../components/WidgetWrapper";
@@ -12,6 +12,7 @@ import {
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "../../state";
   import UserImage from "../../components/UserImage";
+  import Loading from "../../components/Loading";
   
   const PostWidget = ({
     postId,
@@ -39,7 +40,10 @@ import {
     const primary = palette.primary.main;
     const light = palette.neutral.light;
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const getUser = async (userId) => {
+      setIsLoading(true);
       if (!users[userId]) {
         const response = await fetch(`/users/${userId}`, {
           method: "GET",
@@ -48,6 +52,7 @@ import {
         const data = await response.json();
         setUsers((prevUsers) => ({ ...prevUsers, [userId]: data }));
       }
+      setIsLoading(false);
     };
   
     useEffect(() => {
@@ -55,6 +60,7 @@ import {
     }, [comments]);
   
     const patchLike = async () => {
+      setIsLoading(true);
       const response = await fetch(`/posts/${postId}/like`, {
         method: "PATCH",
         headers: {
@@ -65,9 +71,11 @@ import {
       });
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost }));
+      setIsLoading(false);
     };
 
     const postComment = async () => {
+      setIsLoading(true);
       const response = await fetch(`/posts/${postId}/comments`, {
         method: "POST",
         headers: {
@@ -79,6 +87,7 @@ import {
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost }));
       setNewComment('');
+      setIsLoading(false);
     };    
 
     const isUrl = (path) => {
@@ -92,6 +101,9 @@ import {
   
     return (
       <WidgetWrapper m="2rem 0">
+        {isLoading && (
+          <Loading />
+        )}  
         <Friend
           friendId={postUserId}
           name={name}

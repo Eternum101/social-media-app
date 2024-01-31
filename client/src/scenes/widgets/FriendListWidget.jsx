@@ -1,9 +1,10 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import Friend from "../../components/Friend";
 import WidgetWrapper from "../../components/WidgetWrapper";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "../../state";
+import Loading from "../../components/Loading";
 
 const FriendListWidget = ({ userId, isProfile }) => {
   const dispatch = useDispatch();
@@ -11,7 +12,10 @@ const FriendListWidget = ({ userId, isProfile }) => {
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const getFriends = async () => {
+    setIsLoading(true);
     const response = await fetch(
       `/users/${userId}/friends`,
       {
@@ -25,10 +29,14 @@ const FriendListWidget = ({ userId, isProfile }) => {
 
   useEffect(() => {
     getFriends();
+    setIsLoading(false);
   }, [friends]);
 
   return (
     <WidgetWrapper>
+      {isLoading && (
+        <Loading />
+      )}  
       <Typography
         color={palette.neutral.dark}
         variant="h5"
