@@ -91,6 +91,7 @@ const Form = () => {
 
     if (!loggedInResponse.ok) {
       setLoginError("Incorrect email or password. Please try again.");
+      setIsLoading(false);
       return;
     }
 
@@ -254,7 +255,7 @@ const Form = () => {
                 padding: "1rem",
                 backgroundColor: palette.primary.main,
                 color: palette.background.alt,
-                "&:hover": { color: palette.primary.light },
+                "&:hover": { backgroundColor: palette.primary.light },
                 fontSize: "1rem"
               }}
             >
@@ -272,6 +273,7 @@ const Form = () => {
                   cursor: "pointer",
                   color: palette.primary.light,
                 },
+              fontSize: "1rem",
               }}
             >
               {isLogin

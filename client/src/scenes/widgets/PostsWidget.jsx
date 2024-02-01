@@ -12,27 +12,27 @@ const PostsWidget = ({ userId, isProfile = false}) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const getPosts = async () => {
-        setIsLoading(true);
-        const response = await fetch("/posts", {
-            method: "GET",
-            headers: { Authorization: `Bearer ${token}`},
-        });
-        const data = await response.json()
-        dispatch(setPosts({ posts: data }));
-        setIsLoading(false);
+      setIsLoading(true);
+      const response = await fetch("/posts", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}`},
+      });
+      const data = await response.json();
+      dispatch(setPosts({ posts: data }));
+      setIsLoading(false);
     }
-
+    
     const getUserPosts = async () => {
-        setIsLoading(true);
-        const response = await fetch(`/posts/${userId}`, {
-            method: "GET",
-            headers: { Authorization: `Bearer ${token}`},
-        });
-        const data = await response.json()
-        dispatch(setPosts({ posts: data }));
-        setIsLoading(false);
+      setIsLoading(true);
+      const response = await fetch(`/posts/${userId}`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}`},
+      });
+      const data = await response.json();
+      dispatch(setPosts({ posts: data }));
+      setIsLoading(false);
     }
-
+    
     useEffect(() => {
         if (isProfile) {
             getUserPosts();

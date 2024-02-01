@@ -1,9 +1,37 @@
-import {Box, Typography, useMediaQuery } from "@mui/material";
+import {Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Form from "./Form";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../state";
 
 const LoginPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+  const { palette } = useTheme();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const demoLogin = async () => {
+    const demoCredentials = {
+      email: "johndoe@gmail.com",
+      password: "johndoe123",
+    };
+    const loggedInResponse = await fetch("/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(demoCredentials),
+    });
+  
+    const loggedIn = await loggedInResponse.json();
+    dispatch(
+      setLogin({
+        user: loggedIn.user,
+        token: loggedIn.token,
+      })
+    );
+    navigate("/home");
+  };
+  
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" height="100vh" bgcolor="white">
       <Box display="flex" flexDirection={isNonMobileScreens ? "row" : "column"} alignItems="center" justifyContent="space-between">
@@ -11,6 +39,7 @@ const LoginPage = () => {
         <Box display="flex" flexDirection="column" gap="20px" marginBottom="20px">
           <Typography variant="h1">Welcome to <span>Flicker.</span></Typography>
           <Typography variant="h5"> Discover and connect with people who share your passions and interests. Join Flicker today and start flicking!</Typography>
+          <Typography variant="h5" sx={{ color: palette.primary.main, "&:hover": {cursor: "pointer",color: palette.primary.light,},}} onClick={demoLogin}> Try a demo account here.</Typography>
         </Box>
           <Form />
         </Box>

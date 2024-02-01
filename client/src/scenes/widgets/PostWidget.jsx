@@ -60,7 +60,6 @@ import {
     }, [comments]);
   
     const patchLike = async () => {
-      setIsLoading(true);
       const response = await fetch(`/posts/${postId}/like`, {
         method: "PATCH",
         headers: {
@@ -71,11 +70,9 @@ import {
       });
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost }));
-      setIsLoading(false);
     };
 
     const postComment = async () => {
-      setIsLoading(true);
       const response = await fetch(`/posts/${postId}/comments`, {
         method: "POST",
         headers: {
@@ -87,7 +84,6 @@ import {
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost }));
       setNewComment('');
-      setIsLoading(false);
     };    
 
     const isUrl = (path) => {
