@@ -18,7 +18,6 @@ import {
     const { palette } = useTheme();
     const navigate = useNavigate();
     const token = useSelector((state) => state.token);
-    const dark = palette.neutral.dark;
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
 
@@ -61,14 +60,13 @@ import {
         <FlexBetween
           gap="0.5rem"
           pb="1.1rem"
-          onClick={() => navigate(`/profile/${userId}`)}
         >
           <FlexBetween gap="1rem">
             <UserImage image={picturePath} />
             <Box>
               <Typography
                 variant="h4"
-                color={dark}
+                color={main}
                 fontWeight="500"
                 sx={{
                   "&:hover": {
@@ -76,6 +74,7 @@ import {
                     cursor: "pointer",
                   },
                 }}
+                onClick={() => navigate(`/profile/${userId}`)}
               >
                 {firstName} {lastName}
               </Typography>

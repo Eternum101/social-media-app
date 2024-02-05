@@ -3,7 +3,7 @@ import {
     LocationOnOutlined,
     WorkOutlineOutlined,
   } from "@mui/icons-material";
-  import { Box, Typography, Divider, useTheme } from "@mui/material";
+  import { Box, Typography, Divider, useTheme, useMediaQuery } from "@mui/material";
   import UserImage from "../../components/UserImage";
   import FlexBetween from "../../components/FlexBetween";
   import WidgetWrapper from "../../components/WidgetWrapper";
@@ -16,7 +16,6 @@ import {
     const [user, setUser] = useState(null);
     const { palette } = useTheme();
     const token = useSelector((state) => state.token);
-    const dark = palette.neutral.dark;
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
 
@@ -58,7 +57,7 @@ import {
       <Box display="flex" flexDirection="row" justifyContent="center" gap="2rem">
         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="1rem">
           <UserImage image={picturePath} size="200px"/>
-          <Typography variant="h4" color={dark} fontWeight="500">
+          <Typography variant="h4" color={main} fontWeight="500">
               {firstName} {lastName}
             </Typography>
         </Box>
@@ -138,4 +137,4 @@ import {
   );
 };
   
-  export default ProfileUserWidget;
+export default ProfileUserWidget;

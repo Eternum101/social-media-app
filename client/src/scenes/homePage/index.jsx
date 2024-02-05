@@ -13,7 +13,7 @@ const HomePage = () => {
 
   return (
     <Box>
-      <Navbar />
+      <Navbar userId={_id} />
       <Box
         width="100%"
         padding="2rem 6%"

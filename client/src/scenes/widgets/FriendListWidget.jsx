@@ -38,7 +38,7 @@ const FriendListWidget = ({ userId, isProfile }) => {
         <Loading />
       )}  
       <Typography
-        color={palette.neutral.dark}
+        color={palette.neutral.main}
         variant="h5"
         fontWeight="500"
         sx={{ mb: "1.5rem" }}

@@ -3,7 +3,7 @@ export const colorTokens = {
       0: "#FFFFFF",
       10: "#F6F6F6",
       50: "#F0F0F0",
-      100: "#E0E0E0",
+      100: "#1F1F1F",
       200: "#C2C2C2",
       300: "#A3A3A3",
       400: "#858585",

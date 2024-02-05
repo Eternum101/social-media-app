@@ -151,7 +151,10 @@ import {
                 sx={{ 
                   color: post ? 'black' : palette.background.alt, 
                   backgroundColor: palette.primary.main, 
-                  borderRadius: "3rem"
+                  borderRadius: "3rem",
+                  '&:disabled': {
+                  color: 'rgba(0, 0, 0, 0.5)',
+                }
                 }}
               >
                 POST

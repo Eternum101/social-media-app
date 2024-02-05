@@ -9,6 +9,7 @@ import {
     FormControl,
     useTheme,
     useMediaQuery,
+    Button,
 } from "@mui/material";
 import {
     Search,
@@ -26,7 +27,7 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
 import UserImage from "../../components/UserImage";
 
-const Navbar = () => {
+const Navbar = ({ userId }) => {
     const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -80,83 +81,51 @@ const Navbar = () => {
                     <Message sx={{ fontSize: "25px"}} />
                     <Notifications sx={{ fontSize: "25px"}} />
                     <Help sx={{ fontSize: "25px"}} />
-                    <FormControl variant="standard" value={fullName}>
-                        <Select 
-                            value={fullName}
-                            sx={{
-                                width: "100px",
-                                borderRadius: "0.25rem", 
-                                padding: "0.25rem 1rem",
-                                "& .MuiSvgIcon-root": {
-                                    pr: "0.25rem",
-                                    width: "3rem"
-                                },
-                            }}
-                            input={<InputBase/>}
-                            >
-                            <MenuItem value={fullName}>
-                                <UserImage image={user.picturePath} size="40px" />
-                            </MenuItem>
-                            <MenuItem onClick={() => dispatch(setLogout())}>
-                                Log Out
-                            </MenuItem>
-                            </Select>
-                    </FormControl>
+                    <Box sx={{ "&:hover": { cursor: "pointer" } }} onClick={() => navigate(`/profile/${userId}`)}>
+                        <UserImage 
+                            image={user.picturePath} 
+                            size="40px"
+                        />
+                    </Box>
+                    <Button sx={{ fontSize: "0.8rem", backgroundColor: primaryLight, color: dark}} onClick={() => dispatch(setLogout())}>Log Out</Button>
                 </FlexBetween>
                 ) : (
                     <IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}>
                         <Menu />
                     </IconButton>
-                )}
+                )}   
+{!isNonMobileScreens && isMobileMenuToggled && (
+    <Box position="fixed" right="0" bottom="0" height="100%" zIndex="10" maxWidth="500px" minWidth="300px" backgroundColor={background}>
+        <Box display="flex" justifyContent="flex-end" padding="1rem">
+            <IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}>
+                <Close />
+            </IconButton> 
+        </Box>
 
-                {!isNonMobileScreens && isMobileMenuToggled && (
-                    <Box position="fixed" right="0" bottom="0" height="100%" zIndex="10" maxWidth="500px" minWidth="300px" backgroundColor={background}>
-                        <Box display="flex" justifyContent="flex-end" padding="1rem">
-                            <IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}>
-                                <Close />
-                            </IconButton> 
-                        </Box>
-
-                        <FlexBetween display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="3rem">
-                            <IconButton onClick={() => dispatch(setMode())} sx={{ fontSize: "25px"}}>
-                                {theme.palette.mode === "dark" ? (
-                                 <DarkMode sx={{ fontSize: "25px"}} />
-                            ) : (
-                                <LightMode sx={{ color: dark, fontSize: "25px" }} />
-                            )}
-                        </IconButton>
-                        <Message sx={{ fontSize: "25px"}} />
-                        <Notifications sx={{ fontSize: "25px"}} />
-                        <Help sx={{ fontSize: "25px"}} />
-                        <FormControl variant="standard" value={fullName}>
-                            <Select 
-                                value={fullName}
-                                sx={{
-                                    width: "150px",
-                                    borderRadius: "0.25rem", 
-                                    padding: "0.25rem 3rem",
-                                    "& .MuiSvgIcon-root": {
-                                    pr: "0.25rem",
-                                    width: "3rem"
-                                    },
-                                    "& .MuiSelect-select.focus": {
-                                        backgroundColor: neutralLight
-                                    }
-                                }}
-                                input={<InputBase/>}
-                                >
-                                <MenuItem value={fullName}>
-                                    <UserImage image={user.picturePath} size="50px" />
-                                </MenuItem>
-                                <MenuItem onClick={() => dispatch(setLogout())}>
-                                    Log Out
-                                </MenuItem>
-                                </Select>
-                        </FormControl>
-                    </FlexBetween>
-                </Box>
+        <FlexBetween display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="3rem">
+            <IconButton onClick={() => dispatch(setMode())} sx={{ fontSize: "25px"}}>
+                {theme.palette.mode === "dark" ? (
+                    <DarkMode sx={{ fontSize: "25px"}} />
+                ) : (
+                    <LightMode sx={{ color: dark, fontSize: "25px" }} />
                 )}
+            </IconButton>
+            <Message sx={{ fontSize: "25px"}} />
+            <Notifications sx={{ fontSize: "25px"}} />
+            <Help sx={{ fontSize: "25px"}} />
+            <FormControl variant="standard" value={fullName}>
+            <Box sx={{ "&:hover": { cursor: "pointer" } }} onClick={() => navigate(`/profile/${userId}`)}>
+                <UserImage 
+                    image={user.picturePath} 
+                    size="50px"
+                />
+            </Box>
+            </FormControl>
+            <Button sx={{ fontSize: "0.8rem", backgroundColor: primaryLight, color: dark}} onClick={() => dispatch(setLogout())}>Log Out</Button>
         </FlexBetween>
+    </Box>
+    )}
+    </FlexBetween>
     )
 }
 
