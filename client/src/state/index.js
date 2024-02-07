@@ -39,9 +39,16 @@ export const authSlice = createSlice({
                 return post;
             });
             state.posts = updatedPosts;
-        }
+        },
+        setPicturePath: (state, action) => {
+            if (state.user) {
+              state.user.picturePath = action.payload;
+            } else {
+              console.error("User doesn't exist");
+            }
+          },
     }
 });
 
-export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost } = authSlice.actions;
+export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost, setPicturePath } = authSlice.actions;
 export default authSlice.reducer;

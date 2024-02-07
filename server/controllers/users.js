@@ -59,3 +59,19 @@ export const addRemoveFriend = async (req, res) => {
       res.status(404).json({ message: err.message });
     }
   };
+
+  export const updateProfilePicture = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findById(id);
+
+        const picturePath = req.file.filename;
+
+        user.picturePath = picturePath;
+        await user.save();
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

@@ -1,25 +1,32 @@
 import {
-    EditOutlined,
     LocationOnOutlined,
     WorkOutlineOutlined,
+    CameraAlt,
   } from "@mui/icons-material";
-  import { Box, Typography, Divider, useTheme, useMediaQuery } from "@mui/material";
+  import { Box, Typography, Divider, useTheme } from "@mui/material";
   import UserImage from "../../components/UserImage";
   import FlexBetween from "../../components/FlexBetween";
   import WidgetWrapper from "../../components/WidgetWrapper";
-  import { useSelector } from "react-redux";
-  import { useEffect, useState } from "react";
+  import { useSelector,  useDispatch } from "react-redux";
+  import { useEffect, useState, useRef } from "react";
   import FriendProfile from "../../components/FriendProfile";
   import Loading from "../../components/Loading";
+  import { setPicturePath } from "../../state";
 
-  const ProfileUserWidget = ({ userId, picturePath }) => {
+  const ProfileUserWidget = ({ userId }) => {
     const [user, setUser] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const loggedInUserId = useSelector((state) => state.user._id);
     const { palette } = useTheme();
     const token = useSelector((state) => state.token);
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    
+    const fileInputRef = useRef();
+    const dispatch = useDispatch();
   
     const getUser = async () => {
       setIsLoading(true);
@@ -48,6 +55,40 @@ import {
       viewedProfile,
       impressions,
     } = user;
+
+const onFileChange = event => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    onFileUpload(file);
+};
+
+const onFileUpload = async (file) => {
+    if (!file) {
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("picturePath", file.name);
+    formData.append("picture", file);
+
+    const response = await fetch(`/users/${userId}/updateProfilePicture`, {
+        method: "PATCH",
+        body: formData,
+        headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    } else {
+        const user = await response.json();
+        setUser(user);
+        dispatch(setPicturePath(user.picturePath));
+    }
+};
+
+  const onImageClick = () => {
+    fileInputRef.current.click();
+  };
     
   return (
     <WidgetWrapper>
@@ -56,8 +97,35 @@ import {
       )}
       <Box display="flex" flexDirection="row" justifyContent="center" gap="2rem">
         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="1rem">
-          <UserImage image={picturePath} size="200px"/>
-          <Typography variant="h4" color={main} fontWeight="500">
+        {userId === loggedInUserId ? (
+        <Box 
+          onClick={onImageClick} 
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          sx={{ position: 'relative', "&:hover": { cursor: "pointer", opacity: "0.5"} }}
+        >
+      <UserImage image={user.picturePath} size="200px"/>
+      {isHovered && (
+    <Box 
+        sx={{ 
+          position: 'absolute', 
+          top: '50%', 
+          left: '50%', 
+          transform: 'translate(-50%, -50%)', 
+          color: 'white' 
+        }}
+      >
+      <CameraAlt style={{ fontSize: 60 }}/>
+    </Box>
+    )}
+    <Box>
+      <input type="file" onChange={onFileChange} ref={fileInputRef} style={{ display: 'none' }}/>
+    </Box>
+  </Box>
+      ) : (
+        <UserImage image={user.picturePath} size="200px"/>
+      )}
+         <Typography variant="h4" color={main} fontWeight="500">
               {firstName} {lastName}
             </Typography>
         </Box>
@@ -115,7 +183,6 @@ import {
                   <Typography color={medium}>Social Network</Typography>
                 </Box>
               </FlexBetween>
-              <EditOutlined sx={{ color: main }} />
             </FlexBetween>
     
             <FlexBetween gap="1rem">
@@ -128,7 +195,6 @@ import {
                   <Typography color={medium}>Network Platform</Typography>
                 </Box>
               </FlexBetween>
-              <EditOutlined sx={{ color: main }} />
             </FlexBetween>
           </Box>
         </Box>

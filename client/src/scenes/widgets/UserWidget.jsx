@@ -1,6 +1,5 @@
 import {
     ManageAccountsOutlined,
-    EditOutlined,
     LocationOnOutlined,
     WorkOutlineOutlined,
   } from "@mui/icons-material";
@@ -13,7 +12,7 @@ import {
   import { useNavigate } from "react-router-dom";
   import Loading from "../../components/Loading";
   
-  const UserWidget = ({ userId, picturePath }) => {
+  const UserWidget = ({ userId }) => {
     const [user, setUser] = useState(null);
     const { palette } = useTheme();
     const navigate = useNavigate();
@@ -62,7 +61,7 @@ import {
           pb="1.1rem"
         >
           <FlexBetween gap="1rem">
-            <UserImage image={picturePath} />
+            <UserImage image={user.picturePath} />
             <Box>
               <Typography
                 variant="h4"
@@ -131,7 +130,6 @@ import {
                 <Typography color={medium}>Social Network</Typography>
               </Box>
             </FlexBetween>
-            <EditOutlined sx={{ color: main }} />
           </FlexBetween>
   
           <FlexBetween gap="1rem">
@@ -144,7 +142,6 @@ import {
                 <Typography color={medium}>Network Platform</Typography>
               </Box>
             </FlexBetween>
-            <EditOutlined sx={{ color: main }} />
           </FlexBetween>
         </Box>
       </WidgetWrapper>
