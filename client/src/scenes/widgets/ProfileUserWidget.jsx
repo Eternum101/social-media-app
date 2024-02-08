@@ -13,7 +13,7 @@ import {
   import Loading from "../../components/Loading";
   import { setPicturePath } from "../../state";
 
-  const ProfileUserWidget = ({ userId }) => {
+  const ProfileUserWidget = ({ userId, picturePath }) => {
     const [user, setUser] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const loggedInUserId = useSelector((state) => state.user._id);
@@ -104,7 +104,7 @@ const onFileUpload = async (file) => {
           onMouseLeave={() => setIsHovered(false)}
           sx={{ position: 'relative', "&:hover": { cursor: "pointer", opacity: "0.5"} }}
         >
-      <UserImage image={user.picturePath} size="200px"/>
+      <UserImage image={picturePath} size="200px"/>
       {isHovered && (
     <Box 
         sx={{ 

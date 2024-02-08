@@ -13,6 +13,7 @@ const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const { userId } = useParams();
   const loggedInUserId = useSelector((state) => state.user._id);
+  const picturePath = useSelector((state) => state.user.picturePath);
   const token = useSelector((state) => state.token);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   
@@ -50,7 +51,7 @@ const ProfilePage = () => {
         justifyContent="center"
         margin="auto"
       >
-        <ProfileUserWidget userId={userId} picturePath={user.picturePath} />
+        <ProfileUserWidget userId={userId} picturePath={picturePath} />
         <Box />
         <Box
           display={isNonMobileScreens ? "flex" : "column"}
@@ -63,7 +64,7 @@ const ProfilePage = () => {
             </Box>
           )}
         <Box flexBasis={isNonMobileScreens ? "70%" : "100%"} margin={loggedInUserId === userId ? "2rem 0" : "0"}>
-          {loggedInUserId === userId && <MyPostWidget picturePath={user.picturePath}/>}
+          {loggedInUserId === userId && <MyPostWidget picturePath={picturePath}/>}
           <PostsWidget userId={userId} isProfile />
         </Box>
 </Box>

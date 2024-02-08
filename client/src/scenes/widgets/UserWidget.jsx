@@ -12,7 +12,7 @@ import {
   import { useNavigate } from "react-router-dom";
   import Loading from "../../components/Loading";
   
-  const UserWidget = ({ userId }) => {
+  const UserWidget = ({ userId, picturePath }) => {
     const [user, setUser] = useState(null);
     const { palette } = useTheme();
     const navigate = useNavigate();
@@ -61,7 +61,7 @@ import {
           pb="1.1rem"
         >
           <FlexBetween gap="1rem">
-            <UserImage image={user.picturePath} />
+            <UserImage image={picturePath} />
             <Box>
               <Typography
                 variant="h4"

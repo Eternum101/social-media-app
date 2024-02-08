@@ -21,12 +21,13 @@ import {
   import Dropzone from "react-dropzone";
   import UserImage from "../../components/UserImage";
   import WidgetWrapper from "../../components/WidgetWrapper";
-  import { useState } from "react";
+  import { useState, useEffect } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPosts } from "../../state";
   import Loading from "../../components/Loading";
 
-  const MyPostWidget = ({ picturePath }) => {
+  const MyPostWidget = ({ userId, picturePath }) => {
+    const [user, setUser] = useState(null);
     const dispatch = useDispatch();
     const [isImage, setIsImage] = useState(false);
     const [image, setImage] = useState(null);
@@ -39,6 +40,25 @@ import {
     const medium = palette.neutral.medium;
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const getUser = async () => {
+      setIsLoading(true);
+      const response = await fetch(`/users/${userId}`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+      setUser(data);
+      setIsLoading(false);
+    };
+  
+    useEffect(() => {
+      getUser();
+    }, []);
+  
+    if (!user) {
+      return null;
+    }
 
     const handlePost = async() => {
         setIsLoading(true);

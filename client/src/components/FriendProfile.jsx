@@ -32,8 +32,6 @@ const FriendProfile = ({ friendId }) => {
     setIsProfileFriend(!isProfileFriend);
   };
 
-  console.log('Friend ID:', friendId);
-
   return (
     loggedInUserId !== friendId && (
       <Button variant="contained" color="primary" sx={{ marginTop: '20px' }} onClick={patchFriend}>
