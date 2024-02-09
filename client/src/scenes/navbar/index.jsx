@@ -10,6 +10,8 @@ import {
     useTheme,
     useMediaQuery,
     Button,
+    Alert,
+    Snackbar,
 } from "@mui/material";
 import {
     Search,
@@ -19,7 +21,7 @@ import {
     Notifications,
     Help,
     Menu,
-    Close
+    Close,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../state";
@@ -42,6 +44,15 @@ const Navbar = ({ userId }) => {
     const alt = theme.palette.background.alt;
 
     const fullName = user ? `${user.firstName} ${user.lastName}` : '';
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+      };
 
     return (
         <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -78,9 +89,9 @@ const Navbar = ({ userId }) => {
                             <LightMode sx={{ color: dark, fontSize: "25px" }} />
                         )}
                     </IconButton>
-                    <Message sx={{ fontSize: "25px"}} />
-                    <Notifications sx={{ fontSize: "25px"}} />
-                    <Help sx={{ fontSize: "25px"}} />
+                    <Message onClick={handleClick} sx={{ fontSize: "25px"}} />
+                    <Notifications onClick={handleClick} sx={{ fontSize: "25px"}} />
+                    <Help onClick={handleClick} sx={{ fontSize: "25px"}} />
                     <Box sx={{ "&:hover": { cursor: "pointer" } }} onClick={() => navigate(`/profile/${userId}`)}>
                         <UserImage 
                             image={user.picturePath} 
@@ -110,11 +121,11 @@ const Navbar = ({ userId }) => {
                     <LightMode sx={{ color: dark, fontSize: "25px" }} />
                 )}
             </IconButton>
-            <Message sx={{ fontSize: "25px"}} />
-            <Notifications sx={{ fontSize: "25px"}} />
-            <Help sx={{ fontSize: "25px"}} />
+            <Message onClick={handleClick} sx={{ fontSize: "25px"}} />
+            <Notifications onClick={handleClick} sx={{ fontSize: "25px"}} />
+            <Help onClick={handleClick} sx={{ fontSize: "25px"}} />
             <FormControl variant="standard" value={fullName}>
-            <Box sx={{ "&:hover": { cursor: "pointer" } }} onClick={() => navigate(`/profile/${userId}`)}>
+            <Box sx={{ "&:hover": { cursor: "pointer" } }} onClick={() => navigate(`/profile/${user._id}`)}>
                 <UserImage 
                     image={user.picturePath} 
                     size="50px"
@@ -125,6 +136,28 @@ const Navbar = ({ userId }) => {
         </FlexBetween>
     </Box>
     )}
+    <Snackbar 
+        open={open} 
+        autoHideDuration={3000} 
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        sx={{
+            position: 'fixed',
+            bottom: '0px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+        }}
+        >
+        <Alert
+            onClose={handleClose}
+            severity="info"
+            variant="filled"
+            sx={{ width: '100%' }}
+            color="warning"
+        >
+        This Button is Used For Display Purposes Only
+        </Alert>
+    </Snackbar>
     </FlexBetween>
     )
 }

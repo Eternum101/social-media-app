@@ -41,7 +41,7 @@ const ProfilePage = () => {
       {isLoading && (
         <Loading />
       )}  
-      <Navbar />
+      <Navbar userId={loggedInUserId}/>
       <Box
         width="100%"
         maxWidth="1200px"

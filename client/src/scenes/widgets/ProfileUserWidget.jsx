@@ -41,7 +41,7 @@ import {
   
     useEffect(() => {
       getUser();
-    }, []);
+    }, [userId]);
   
     if (!user) {
       return null;

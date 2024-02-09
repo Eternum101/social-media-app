@@ -87,13 +87,16 @@ import {
     };    
 
     const isUrl = (path) => {
+      if (typeof path !== 'string' || path.trim() === '') {
+        return false;
+      }
       try {
         new URL(path);
         return true;
       } catch (_) {
         return false;  
       }
-    };
+    };    
   
     return (
       <WidgetWrapper m="2rem 0">
