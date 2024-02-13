@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { setFriends } from "../state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
-import Loading from "./Loading";
 
 const Friend = ({ friendId, name, subtitle, userPicturePath, showAddFriendButton }) => {
   const dispatch = useDispatch();
@@ -14,8 +13,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, showAddFriendButton
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
@@ -26,7 +23,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, showAddFriendButton
   const [isFriend, setIsFriend] = useState(Array.isArray(friends) && Boolean(friends.find((friend) => friend._id === friendId)));
   
   const patchFriend = async () => {
-    setIsLoading(true);
     if (_id === friendId) {
       return;
     }
@@ -43,18 +39,15 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, showAddFriendButton
     const data = await response.json();
     dispatch(setFriends({ friends: data }));
     setIsFriend(!isFriend);
-    setIsLoading(false);
   };
 
   useEffect(() => {
     setIsFriend(Array.isArray(friends) && Boolean(friends.find((friend) => friend._id === friendId)));
+    console.log('isFriend:', isFriend);
   }, [friends, friendId]);
 
   return (
     <FlexBetween>
-    {isLoading && (
-      <Loading />
-    )}
       <FlexBetween gap="1rem">
         <UserImage image={userPicturePath} size="55px" />
         <Box

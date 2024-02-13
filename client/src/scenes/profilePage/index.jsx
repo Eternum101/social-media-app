@@ -60,7 +60,7 @@ const ProfilePage = () => {
         >
           {isNonMobileScreens && (
             <Box width="500px" margin="2rem 0">
-              <FriendListWidget userId={userId} />
+              <FriendListWidget userId={userId} isProfile/>
             </Box>
           )}
         <Box flexBasis={isNonMobileScreens ? "70%" : "100%"} margin={loggedInUserId === userId ? "2rem 0" : "0"}>
