@@ -98,7 +98,13 @@ const Navbar = ({ userId }) => {
                             size="40px"
                         />
                     </Box>
-                    <Button sx={{ fontSize: "0.8rem", backgroundColor: primaryLight, color: dark}} onClick={() => dispatch(setLogout())}>Log Out</Button>
+                    <Button sx={{ fontSize: "0.8rem", backgroundColor: primaryLight, color: dark}} onClick={() => {
+                        if (theme.palette.mode === "dark") {
+                            dispatch(setMode('light'));
+                        }
+                        dispatch(setLogout());
+                        }}>Log Out
+                    </Button>
                 </FlexBetween>
                 ) : (
                     <IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}>
@@ -132,7 +138,13 @@ const Navbar = ({ userId }) => {
                 />
             </Box>
             </FormControl>
-            <Button sx={{ fontSize: "0.8rem", backgroundColor: primaryLight, color: dark}} onClick={() => dispatch(setLogout())}>Log Out</Button>
+            <Button sx={{ fontSize: "0.8rem", backgroundColor: primaryLight, color: dark}} onClick={() => {
+                if (theme.palette.mode === "dark") {
+                    dispatch(setMode('light'));
+                }
+                dispatch(setLogout());
+                }}>Log Out
+            </Button>
         </FlexBetween>
     </Box>
     )}
