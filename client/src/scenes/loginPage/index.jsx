@@ -33,7 +33,7 @@ const LoginPage = () => {
   };
   
   return (
-    <Box display="flex" flexDirection="column" justifyContent="center" height="100vh" bgcolor="white">
+    <Box display="flex" flexDirection="column" justifyContent="center" minHeight="100vh" bgcolor="white">
       <Box display="flex" flexDirection={isNonMobileScreens ? "row" : "column"} alignItems="center" justifyContent="space-between">
         <Box width={isNonMobileScreens ? "45%" : "93%"} padding="2rem" margin="2rem auto" borderRadius="1.5rem">
         <Box display="flex" flexDirection="column" gap="20px" marginBottom="20px">

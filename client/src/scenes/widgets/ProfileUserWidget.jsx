@@ -3,7 +3,7 @@ import {
     WorkOutlineOutlined,
     CameraAlt,
   } from "@mui/icons-material";
-  import { Box, Typography, Divider, useTheme } from "@mui/material";
+  import { Box, Typography, Divider, useTheme, useMediaQuery } from "@mui/material";
   import UserImage from "../../components/UserImage";
   import FlexBetween from "../../components/FlexBetween";
   import WidgetWrapper from "../../components/WidgetWrapper";
@@ -21,6 +21,7 @@ import {
     const token = useSelector((state) => state.token);
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
+    const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
     const [isLoading, setIsLoading] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
@@ -95,7 +96,7 @@ const onFileUpload = async (file) => {
       {isLoading && (
         <Loading />
       )}
-      <Box display="flex" flexDirection="row" justifyContent="center" gap="2rem">
+      <Box display="flex" flexDirection={!isNonMobileScreens ? "column" : "row"} justifyContent="center" gap={isNonMobileScreens ? "2rem" : "0rem"}>
         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap="1rem">
         {userId === loggedInUserId ? (
         <Box 
@@ -129,7 +130,12 @@ const onFileUpload = async (file) => {
               {firstName} {lastName}
             </Typography>
         </Box>
-        <Box ml={2} display="flex" flexDirection="row" justifyContent="center" gap="3rem">
+        {!isNonMobileScreens && (
+            <Box display="flex" justifyContent="center">
+              <FriendProfile friendId={userId}/>
+            </Box>
+        )}
+        <Box ml={2} display="flex" flexDirection={!isNonMobileScreens ? "column" : "row"} justifyContent="center" gap={ isNonMobileScreens ? "3rem" : "0rem"}>
           <Box>
             <Box p="1rem 0">
                 <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
@@ -163,9 +169,11 @@ const onFileUpload = async (file) => {
           </Typography>
         </Box>
       </Box>
-      <Box display="flex" justifyContent="flex-start">
+      {isNonMobileScreens && (
+      <Box display="flex" justifyContent= "flex-start">
         <FriendProfile friendId={userId}/>
       </Box>
+      )}
     </Box>
           </Box>
           <Box p="1rem 0">

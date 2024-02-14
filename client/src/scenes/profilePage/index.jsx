@@ -52,7 +52,11 @@ const ProfilePage = () => {
         margin="auto"
       >
         <ProfileUserWidget userId={userId} picturePath={picturePath} />
-        <Box />
+        {!isNonMobileScreens && (
+        <Box margin="2rem 0">
+          <FriendListWidget userId={userId} isProfile/>
+        </Box>
+      )}
         <Box
           display={isNonMobileScreens ? "flex" : "column"}
           flexDirection={isNonMobileScreens ? "row" : "column"}
