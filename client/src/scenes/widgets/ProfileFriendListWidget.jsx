@@ -3,18 +3,18 @@ import Friend from "../../components/Friend";
 import WidgetWrapper from "../../components/WidgetWrapper";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFriends } from "../../state";
+import { setProfileFriends } from "../../state";
 import Loading from "../../components/Loading";
 
-const FriendListWidget = ({ userId, isProfile }) => {
+const ProfileFriendListWidget = ({ userId, friends }) => {
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const token = useSelector((state) => state.token);
-  const friends = useSelector((state) => state.user.friends);
+  const profileFriends = useSelector((state) => state.profileFriends); // You'll need to add this to your state
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const getFriends = async () => {
+  const getProfileFriends = async () => {
     setIsLoading(true);
     const response = await fetch(
       `/users/${userId}/friends`,
@@ -24,13 +24,13 @@ const FriendListWidget = ({ userId, isProfile }) => {
       }
     );
     const data = await response.json();
-    dispatch(setFriends({ friends: data }));
+    dispatch(setProfileFriends({ friends: data }));
     setIsLoading(false);
   };
 
   useEffect(() => {
-    getFriends();
-  }, []);
+    getProfileFriends();
+  }, [userId, friends]);
 
   return (
     <WidgetWrapper>
@@ -46,19 +46,18 @@ const FriendListWidget = ({ userId, isProfile }) => {
         Friend List
       </Typography>
       <Box display="flex" flexDirection="column" gap="1.5rem">
-        {friends.map((friend) => (
-          <Friend
-            key={friend._id}
-            friendId={friend._id}
-            name={`${friend.firstName} ${friend.lastName}`}
-            subtitle={friend.occupation}
-            userPicturePath={friend.picturePath}
-            showAddFriendButton={!isProfile}
-          />
-        ))}
+      {Array.isArray(profileFriends) && profileFriends.map((friend) => (
+      <Friend
+        key={friend._id}
+        friendId={friend._id}
+        name={`${friend.firstName} ${friend.lastName}`}
+        subtitle={friend.occupation}
+        userPicturePath={friend.picturePath}
+      />
+    ))}
       </Box>
     </WidgetWrapper>
   );
 };
 
-export default FriendListWidget;
+export default ProfileFriendListWidget;

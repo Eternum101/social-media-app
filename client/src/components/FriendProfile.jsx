@@ -11,7 +11,7 @@ const FriendProfile = ({ friendId }) => {
   const friends = useSelector((state) => state.user.friends);
 
   const [isProfileFriend, setIsProfileFriend] = useState(Array.isArray(friends) && Boolean(friends.find((friend) => friend._id === friendId)));
-  const isFriend = Array.isArray(friends) && friends.some(friend => friend._id === loggedInUserId);
+  const isFriend = Array.isArray(friends) && friends.some(friend => friend._id === friendId);
 
   const patchFriend = async () => {
     if (loggedInUserId === friendId) {

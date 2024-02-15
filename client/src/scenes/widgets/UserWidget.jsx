@@ -80,7 +80,13 @@ import {
               <Typography color={medium}>{friends.length} friends</Typography>
             </Box>
           </FlexBetween>
-          <ManageAccountsOutlined />
+          <ManageAccountsOutlined sx={{
+            "&:hover": {
+            color: palette.primary.light,
+            cursor: "pointer",
+              },
+            }}
+            onClick={() => navigate(`/profile/${userId}`)}/>
         </FlexBetween>
   
         <Divider />

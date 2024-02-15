@@ -11,7 +11,7 @@ const AdvertWidget = () => {
     return (
         <WidgetWrapper>
             <FlexBetween>
-                <Typography color={dark} variant="h5" fontWeight="500">
+                <Typography color={main} variant="h5" fontWeight="500">
                     Sponsored
                 </Typography>
                 <Typography color={medium}>

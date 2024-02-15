@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "../navbar";
-import FriendListWidget from "../widgets/FriendListWidget";
+import ProfileFriendListWidget from "../widgets/ProfileFriendListWidget";
 import PostsWidget from "../widgets/PostsWidget";
 import ProfileUserWidget from "../widgets/ProfileUserWidget";
 import MyPostWidget from "../widgets/MyPostWidget";
@@ -15,6 +15,7 @@ const ProfilePage = () => {
   const loggedInUserId = useSelector((state) => state.user._id);
   const picturePath = useSelector((state) => state.user.picturePath);
   const token = useSelector((state) => state.token);
+  const friends = useSelector((state) => state.user.friends)
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   
   const [isLoading, setIsLoading] = useState(false);
@@ -54,7 +55,7 @@ const ProfilePage = () => {
         <ProfileUserWidget userId={userId} picturePath={picturePath} />
         {!isNonMobileScreens && (
         <Box margin="2rem 0">
-          <FriendListWidget userId={userId} isProfile/>
+          <ProfileFriendListWidget userId={userId} friends={friends} isProfile/>
         </Box>
       )}
         <Box
@@ -64,7 +65,7 @@ const ProfilePage = () => {
         >
           {isNonMobileScreens && (
             <Box width="500px" margin="2rem 0">
-              <FriendListWidget userId={userId} isProfile/>
+              <ProfileFriendListWidget userId={userId} friends={friends} isProfile/>
             </Box>
           )}
         <Box flexBasis={isNonMobileScreens ? "70%" : "100%"} margin={loggedInUserId === userId ? "2rem 0" : "0"}>

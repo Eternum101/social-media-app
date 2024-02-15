@@ -89,9 +89,9 @@ const Navbar = ({ userId }) => {
                             <LightMode sx={{ color: dark, fontSize: "25px" }} />
                         )}
                     </IconButton>
-                    <Message onClick={handleClick} sx={{ fontSize: "25px"}} />
-                    <Notifications onClick={handleClick} sx={{ fontSize: "25px"}} />
-                    <Help onClick={handleClick} sx={{ fontSize: "25px"}} />
+                    <Message onClick={handleClick} sx={{ fontSize: "25px", "&:hover": { cursor: "pointer" } }} />
+                    <Notifications onClick={handleClick} sx={{ fontSize: "25px", "&:hover": { cursor: "pointer" }}} />
+                    <Help onClick={handleClick} sx={{ fontSize: "25px", "&:hover": { cursor: "pointer" }}} />
                     <Box sx={{ "&:hover": { cursor: "pointer" } }} onClick={() => navigate(`/profile/${userId}`)}>
                         <UserImage 
                             image={user.picturePath} 
@@ -127,9 +127,9 @@ const Navbar = ({ userId }) => {
                     <LightMode sx={{ color: dark, fontSize: "25px" }} />
                 )}
             </IconButton>
-            <Message onClick={handleClick} sx={{ fontSize: "25px"}} />
-            <Notifications onClick={handleClick} sx={{ fontSize: "25px"}} />
-            <Help onClick={handleClick} sx={{ fontSize: "25px"}} />
+            <Message onClick={handleClick} sx={{ fontSize: "25px", "&:hover": { cursor: "pointer" }}} />
+            <Notifications onClick={handleClick} sx={{ fontSize: "25px", "&:hover": { cursor: "pointer" }}} />
+            <Help onClick={handleClick} sx={{ fontSize: "25px", "&:hover": { cursor: "pointer" }}} />
             <FormControl variant="standard" value={fullName}>
             <Box sx={{ "&:hover": { cursor: "pointer" } }} onClick={() => navigate(`/profile/${user._id}`)}>
                 <UserImage 

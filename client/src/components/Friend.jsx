@@ -43,7 +43,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, showAddFriendButton
 
   useEffect(() => {
     setIsFriend(Array.isArray(friends) && Boolean(friends.find((friend) => friend._id === friendId)));
-    console.log('isFriend:', isFriend);
   }, [friends, friendId]);
 
   return (
