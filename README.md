@@ -14,31 +14,28 @@ A Social Media Website that primarily focuses on interactions between each user.
 ## Screenshots
 
 ### Initial Screen
-![](screenshots/initial-screen-inventory-app.png) 
+![](screenshots/initial-screen-social-media-app.png) 
 
-### Items Page
-![](screenshots/items-page-inventory-app.png) 
+### Register Form
+![](screenshots/register-social-media-app.png) 
 
-### Add Item
-![](screenshots/add-item-inventory-app.png)
+### Main Page
+![](screenshots/main-page-social-media-app.png)
 
-### Individual Items Page
-![](screenshots/individual-item-page-inventory-app.png)
+### Create Post
+![](screenshots/my-post-social-media-app.png)
 
-### Update Item
-![](screenshots/update-item-inventory-app.png)
+### Like & Comment
+![](screenshots/like-comment-social-media-app.png)
 
 ### Categories Page
 ![](screenshots/categories-page-inventory-app.png)
 
-### Add Category
-![](screenshots/add-category-inventory-app.png)
+### User Profile (Logged-In)
+![](screenshots/user-profile-logged-in-social-media-app.png)
 
-### Individual Categories Page
-![](screenshots/individual-category-page-inventory-app.png)
-
-### Update Category
-![](screenshots/update-category-inventory-app.png)
+### User Profile
+![](screenshots/user-profile-social-media-app.png)
 
 [Back to Top](#social-media-app)
 
