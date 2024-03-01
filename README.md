@@ -28,9 +28,6 @@ A Social Media Website that primarily focuses on interactions between each user.
 ### Like & Comment
 ![](screenshots/like-comment-social-media-app.png)
 
-### Categories Page
-![](screenshots/categories-page-inventory-app.png)
-
 ### User Profile (Logged-In)
 ![](screenshots/user-profile-logged-in-social-media-app.png)
 
