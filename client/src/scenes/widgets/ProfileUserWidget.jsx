@@ -12,6 +12,7 @@ import {
   import FriendProfile from "../../components/FriendProfile";
   import Loading from "../../components/Loading";
   import { setPicturePath } from "../../state";
+  import { SERVER_URL } from "../../App";
 
   const ProfileUserWidget = ({ userId, picturePath }) => {
     const [user, setUser] = useState(null);
@@ -31,7 +32,7 @@ import {
   
     const getUser = async () => {
       setIsLoading(true);
-      const response = await fetch(`/users/${userId}`, {
+      const response = await fetch(`${SERVER_URL}/users/${userId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -72,7 +73,7 @@ const onFileUpload = async (file) => {
     formData.append("picturePath", file.name);
     formData.append("picture", file);
 
-    const response = await fetch(`/users/${userId}/updateProfilePicture`, {
+    const response = await fetch(`${SERVER_URL}/users/${userId}/updateProfilePicture`, {
         method: "PATCH",
         body: formData,
         headers: { Authorization: `Bearer ${token}` },

@@ -13,6 +13,7 @@ import {
   import { setPost } from "../../state";
   import UserImage from "../../components/UserImage";
   import Loading from "../../components/Loading";
+  import { SERVER_URL } from "../../App";
   
   const PostWidget = ({
     postId,
@@ -45,7 +46,7 @@ import {
     const getUser = async (userId) => {
       setIsLoading(true);
       if (!users[userId]) {
-        const response = await fetch(`/users/${userId}`, {
+        const response = await fetch(`${SERVER_URL}/users/${userId}`, {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -60,7 +61,7 @@ import {
     }, [comments]);
   
     const patchLike = async () => {
-      const response = await fetch(`/posts/${postId}/like`, {
+      const response = await fetch(`${SERVER_URL}/posts/${postId}/like`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -73,7 +74,7 @@ import {
     };
 
     const postComment = async () => {
-      const response = await fetch(`/posts/${postId}/comments`, {
+      const response = await fetch(`${SERVER_URL}/posts/${postId}/comments`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import DoneIcon from '@mui/icons-material/Done';
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "../state";
+import { SERVER_URL } from "../App";
 
 const FriendProfile = ({ friendId }) => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const FriendProfile = ({ friendId }) => {
       return;
     }
     const response = await fetch(
-      `/users/${loggedInUserId}/${friendId}`,
+      `${SERVER_URL}/users/${loggedInUserId}/${friendId}`,
       {
         method: "PATCH",
         headers: {

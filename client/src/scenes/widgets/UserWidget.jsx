@@ -11,6 +11,7 @@ import {
   import { useEffect, useState } from "react";
   import { useNavigate } from "react-router-dom";
   import Loading from "../../components/Loading";
+  import { SERVER_URL } from "../../App";
   
   const UserWidget = ({ userId, picturePath }) => {
     const [user, setUser] = useState(null);
@@ -24,7 +25,7 @@ import {
   
     const getUser = async () => {
       setIsLoading(true);
-      const response = await fetch(`/users/${userId}`, {
+      const response = await fetch(`${SERVER_URL}/users/${userId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });

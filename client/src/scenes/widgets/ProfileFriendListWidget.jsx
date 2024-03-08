@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfileFriends } from "../../state";
 import Loading from "../../components/Loading";
+import { SERVER_URL } from "../../App";
 
 const ProfileFriendListWidget = ({ userId, friends }) => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const ProfileFriendListWidget = ({ userId, friends }) => {
   const getProfileFriends = async () => {
     setIsLoading(true);
     const response = await fetch(
-      `/users/${userId}/friends`,
+      `${SERVER_URL}/users/${userId}/friends`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

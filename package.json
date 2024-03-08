@@ -1,0 +1,11 @@
+{
+  "name": "social-media-app",
+  "version": "1.0.0",
+  "description": "A Social Media Website developed using the MERN Stack. Other Additions Include Material UI, Redux Toolkit, GridFS Storage, Formik and Yup",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

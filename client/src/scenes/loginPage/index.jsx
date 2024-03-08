@@ -3,6 +3,7 @@ import Form from "./Form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../state";
+import { SERVER_URL } from "../../App";
 
 const LoginPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
@@ -16,7 +17,7 @@ const LoginPage = () => {
       email: "johndoe@gmail.com",
       password: "johndoe123",
     };
-    const loggedInResponse = await fetch("/auth/login", {
+    const loggedInResponse = await fetch(`${SERVER_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(demoCredentials),

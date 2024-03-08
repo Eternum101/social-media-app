@@ -16,6 +16,7 @@ import { setLogin } from "../../state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
 import Loading from "../../components/Loading";
+import { SERVER_URL } from "../../App";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -64,7 +65,7 @@ const Form = () => {
     formData.append("picturePath", values.picture.name);
 
     const savedUserResponse = await fetch(
-      "/auth/register",
+      `${SERVER_URL}/auth/register`,
       {
         method: "POST",
         body: formData,
@@ -83,7 +84,7 @@ const Form = () => {
 
   const login = async (values, onSubmitProps) => {
     setIsLoading(true);
-    const loggedInResponse = await fetch("/auth/login", {
+    const loggedInResponse = await fetch(`${SERVER_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),

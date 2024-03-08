@@ -8,6 +8,7 @@ import PostsWidget from "../widgets/PostsWidget";
 import ProfileUserWidget from "../widgets/ProfileUserWidget";
 import MyPostWidget from "../widgets/MyPostWidget";
 import Loading from "../../components/Loading";
+import { SERVER_URL } from "../../App";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -22,7 +23,7 @@ const ProfilePage = () => {
 
   const getUser = async () => {
     setIsLoading(true);
-    const response = await fetch(`/users/${userId}`, {
+    const response = await fetch(`${SERVER_URL}/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });

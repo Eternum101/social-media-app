@@ -13,9 +13,6 @@ import postRoutes from './routes/posts.js';
 import { register } from './controllers/auth.js';
 import { createPost } from './controllers/posts.js';
 import { verifyToken } from './middleware/auth.js';
-import { users, posts } from './data/seeds.js';
-import User from './models/User.js';
-import Post from './models/Posts.js';
 import { updateProfilePicture } from './controllers/users.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,8 +25,11 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin"}));
 app.use(morgan("common"));
 app.use(express.json({ limit: "30mb", extended: true}));
 app.use(express.urlencoded({ limit: "30mb", extended: true}));
-app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, 'public/assets'))); 
+app.use(cors({
+    origin: ["http://localhost:3000", 
+    ],
+}));
 
 const storage = multer.diskStorage( {
     destination: function (req, file, cb) {
@@ -56,10 +56,4 @@ mongoose.connect(process.env.MONGO_URL, {
     useUnifiedTopology: true,
 }).then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-    //User.insertMany(users)
-    //    .then(() => console.log('Users inserted'))
-    //   .catch((error) => console.error('Error inserting users:', error));
-    //Post.insertMany(posts)
-    //    .then(() => console.log('Posts inserted'))
-    //    .catch((error) => console.error('Error inserting posts:', error));
 }).catch((error) => console.log(`${error} did not connect`));

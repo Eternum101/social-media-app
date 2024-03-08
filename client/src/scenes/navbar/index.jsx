@@ -4,8 +4,6 @@ import {
     IconButton,
     InputBase,
     Typography,
-    Select,
-    MenuItem,
     FormControl,
     useTheme,
     useMediaQuery,
