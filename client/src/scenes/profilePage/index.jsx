@@ -28,11 +28,13 @@ const ProfilePage = () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
+    console.log('User data:', data);
     setUser(data);
     setIsLoading(false);
   };
 
   useEffect(() => {
+    console.log('Fetching user data');
     getUser();
   }, []);
 
@@ -54,6 +56,7 @@ const ProfilePage = () => {
         margin="auto"
       >
         <ProfileUserWidget userId={userId} picturePath={picturePath} />
+        {console.log('ProfileUserWidget props:', { userId, picturePath })}
         {!isNonMobileScreens && (
         <Box margin="2rem 0">
           <ProfileFriendListWidget userId={userId} friends={friends} isProfile/>
@@ -70,7 +73,7 @@ const ProfilePage = () => {
             </Box>
           )}
         <Box flexBasis={isNonMobileScreens ? "70%" : "100%"} margin={loggedInUserId === userId ? "2rem 0" : "0"}>
-          {loggedInUserId === userId && <MyPostWidget picturePath={picturePath}/>}
+          {loggedInUserId === userId && <MyPostWidget userId={userId} picturePath={picturePath}/>}
           <PostsWidget userId={userId} isProfile />
         </Box>
 </Box>
