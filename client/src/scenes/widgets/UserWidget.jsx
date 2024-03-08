@@ -8,7 +8,7 @@ import {
   import FlexBetween from "../../components/FlexBetween";
   import WidgetWrapper from "../../components/WidgetWrapper";
   import { useSelector } from "react-redux";
-  import { useEffect, useState } from "react";
+  import { useEffect, useState, useCallback } from "react";
   import { useNavigate } from "react-router-dom";
   import Loading from "../../components/Loading";
   import { SERVER_URL } from "../../App";
@@ -23,7 +23,7 @@ import {
 
     const [isLoading, setIsLoading] = useState(false);
   
-    const getUser = async () => {
+    const getUser = useCallback(async () => {
       setIsLoading(true);
       const response = await fetch(`${SERVER_URL}/users/${userId}`, {
         method: "GET",
@@ -32,11 +32,11 @@ import {
       const data = await response.json();
       setUser(data);
       setIsLoading(false);
-    };
-  
+    }, [userId, token]);
+    
     useEffect(() => {
       getUser();
-    }, []);
+    }, [getUser]);   
   
     if (!user) {
       return null;

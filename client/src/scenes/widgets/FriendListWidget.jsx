@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import Friend from "../../components/Friend";
 import WidgetWrapper from "../../components/WidgetWrapper";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "../../state";
 import Loading from "../../components/Loading";
@@ -15,7 +15,7 @@ const FriendListWidget = ({ userId, isProfile }) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const getFriends = async () => {
+  const getFriends = useCallback(async () => {
     setIsLoading(true);
     const response = await fetch(
       `${SERVER_URL}/users/${userId}/friends`,
@@ -27,11 +27,11 @@ const FriendListWidget = ({ userId, isProfile }) => {
     const data = await response.json();
     dispatch(setFriends({ friends: data }));
     setIsLoading(false);
-  };
-
+  }, [userId, token, dispatch]);
+  
   useEffect(() => {
     getFriends();
-  }, []);
+  }, [getFriends]);
 
   return (
     <WidgetWrapper>

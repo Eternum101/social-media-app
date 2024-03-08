@@ -8,7 +8,7 @@ import {
   import FlexBetween from "../../components/FlexBetween";
   import WidgetWrapper from "../../components/WidgetWrapper";
   import { useSelector,  useDispatch } from "react-redux";
-  import { useEffect, useState, useRef } from "react";
+  import { useEffect, useState, useRef, useCallback } from "react";
   import FriendProfile from "../../components/FriendProfile";
   import Loading from "../../components/Loading";
   import { setPicturePath } from "../../state";
@@ -30,7 +30,7 @@ import {
     const fileInputRef = useRef();
     const dispatch = useDispatch();
   
-    const getUser = async () => {
+    const getUser = useCallback(async () => {
       setIsLoading(true);
       const response = await fetch(`${SERVER_URL}/users/${userId}`, {
         method: "GET",
@@ -39,11 +39,11 @@ import {
       const data = await response.json();
       setUser(data);
       setIsLoading(false);
-    };
-  
+    }, [userId, token]);
+    
     useEffect(() => {
       getUser();
-    }, [userId]);
+    }, [getUser]);    
   
     if (!user) {
       return null;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../state";
 import PostWidget from "./PostWidget";
@@ -12,7 +12,7 @@ const PostsWidget = ({ userId, isProfile = false}) => {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const getPosts = async () => {
+    const getPosts = useCallback(async () => {
       setIsLoading(true);
       const response = await fetch(`${SERVER_URL}/posts`, {
         method: "GET",
@@ -21,9 +21,9 @@ const PostsWidget = ({ userId, isProfile = false}) => {
       const data = await response.json();
       dispatch(setPosts({ posts: data }));
       setIsLoading(false);
-    }
+    }, [token, dispatch]);
     
-    const getUserPosts = async () => {
+    const getUserPosts = useCallback(async () => {
       setIsLoading(true);
       const response = await fetch(`${SERVER_URL}/posts/${userId}`, {
         method: "GET",
@@ -32,7 +32,7 @@ const PostsWidget = ({ userId, isProfile = false}) => {
       const data = await response.json();
       dispatch(setPosts({ posts: data }));
       setIsLoading(false);
-    }
+    }, [userId, token, dispatch]);
     
     useEffect(() => {
         if (isProfile) {
@@ -40,7 +40,7 @@ const PostsWidget = ({ userId, isProfile = false}) => {
         } else {
             getPosts();
         } 
-    }, [])
+    }, [isProfile, getPosts, getUserPosts]);   
 
     return (
         <>

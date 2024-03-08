@@ -1,5 +1,5 @@
 import { Box, useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "../navbar";
@@ -21,22 +21,20 @@ const ProfilePage = () => {
   
   const [isLoading, setIsLoading] = useState(false);
 
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     setIsLoading(true);
     const response = await fetch(`${SERVER_URL}/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
-    console.log('User data:', data);
     setUser(data);
     setIsLoading(false);
-  };
-
+  }, [userId, token]);
+  
   useEffect(() => {
-    console.log('Fetching user data');
     getUser();
-  }, []);
+  }, [getUser]); 
 
   if (!user) return null;
 

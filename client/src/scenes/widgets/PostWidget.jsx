@@ -8,7 +8,7 @@ import {
   import FlexBetween from "../../components/FlexBetween";
   import Friend from "../../components/Friend";
   import WidgetWrapper from "../../components/WidgetWrapper";
-  import { useEffect, useState } from "react";
+  import { useEffect, useState, useCallback } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "../../state";
   import UserImage from "../../components/UserImage";
@@ -43,7 +43,7 @@ import {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const getUser = async (userId) => {
+    const getUser = useCallback(async (userId) => {
       setIsLoading(true);
       if (!users[userId]) {
         const response = await fetch(`${SERVER_URL}/users/${userId}`, {
@@ -54,11 +54,11 @@ import {
         setUsers((prevUsers) => ({ ...prevUsers, [userId]: data }));
       }
       setIsLoading(false);
-    };
-  
+    }, [users, token, setUsers]);
+    
     useEffect(() => {
       comments.forEach((comment) => getUser(comment.userId));
-    }, [comments]);
+    }, [comments, getUser]);    
   
     const patchLike = async () => {
       const response = await fetch(`${SERVER_URL}/posts/${postId}/like`, {

@@ -21,7 +21,7 @@ import {
   import Dropzone from "react-dropzone";
   import UserImage from "../../components/UserImage";
   import WidgetWrapper from "../../components/WidgetWrapper";
-  import { useState, useEffect } from "react";
+  import { useState, useEffect, useCallback } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPosts } from "../../state";
   import Loading from "../../components/Loading";
@@ -42,7 +42,7 @@ import {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const getUser = async () => {
+    const getUser = useCallback(async () => {
       setIsLoading(true);
       const response = await fetch(`${SERVER_URL}/users/${userId}`, {
         method: "GET",
@@ -51,11 +51,11 @@ import {
       const data = await response.json();
       setUser(data);
       setIsLoading(false);
-    };
-  
+    }, [userId, token]);
+    
     useEffect(() => {
       getUser();
-    }, []);
+    }, [getUser]);   
   
     if (!user) {
       return null;
