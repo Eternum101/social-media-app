@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
+import { SERVER_URL } from "../App";
 
 const UserImage = ({ image, size = "60px" }) => {
-  const imageUrl = image && image.startsWith("http") ? image : `http://localhost:5000/assets/${image}`;
+  const imageUrl = image && image.startsWith("http") ? image : `${SERVER_URL}/assets/${image}`;
 
   return (
     <Box width={size} height={size}>
