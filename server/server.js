@@ -30,6 +30,10 @@ app.use(cors({
     origin: ["http://localhost:3000", 
     "https://social-media-app-el95.onrender.com"],
 }));
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
 
 const storage = multer.diskStorage( {
     destination: function (req, file, cb) {
