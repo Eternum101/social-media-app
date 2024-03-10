@@ -31,9 +31,6 @@ app.use(cors({
     "https://social-media-app-el95.onrender.com"],
 }));
 app.use(express.static(path.join(__dirname, 'client/build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-});
 
 const storage = multer.diskStorage( {
     destination: function (req, file, cb) {
@@ -52,7 +49,11 @@ app.patch("/users/:id/updateProfilePicture", verifyToken, upload.single('picture
 
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
-app.use("/posts", postRoutes); 
+app.use("/posts", postRoutes);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
 
 const PORT = process.env.PORT || 5001;
 mongoose.connect(process.env.MONGO_URL, {
