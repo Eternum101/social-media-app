@@ -28,7 +28,7 @@ app.use(express.urlencoded({ limit: "30mb", extended: true}));
 app.use("/assets", express.static(path.join(__dirname, 'public/assets'))); 
 app.use(cors({
     origin: ["http://localhost:3000", 
-    "https://social-media-app-wfxp.onrender.com"],
+    "https://social-media-app-el95.onrender.com"],
 }));
 
 const storage = multer.diskStorage( {
