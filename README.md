@@ -52,6 +52,7 @@ A Social Media Website that primarily focuses on interactions between each user.
 - Yup
 - Redux Toolkit
 - GridFS Storage
+- Firebase
 
 [Back to Top](#social-media-app)
 
