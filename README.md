@@ -1,6 +1,6 @@
 # Social Media App
 
-View Demo
+🔗 [View Demo](https://social-media-app-el95.onrender.com/)
 
 ## Table of Contents
 - [About The Project](#about-the-project)
