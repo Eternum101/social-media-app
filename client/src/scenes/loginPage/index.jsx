@@ -1,9 +1,11 @@
+import { useState } from "react";
 import {Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Form from "./Form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../state";
 import { SERVER_URL } from "../../App";
+import Loading from "../../components/Loading";
 
 const LoginPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
@@ -11,8 +13,11 @@ const LoginPage = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  const [isLoading, setIsLoading] = useState(false);
 
   const demoLogin = async () => {
+    setIsLoading(true);
     const demoCredentials = {
       email: "johndoe@gmail.com",
       password: "johndoe123",
@@ -31,10 +36,14 @@ const LoginPage = () => {
       })
     );
     navigate("/home");
+    setIsLoading(false);
   };
   
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" minHeight="100vh" bgcolor="white">
+    {isLoading && (
+      <Loading />
+    )}  
       <Box display="flex" flexDirection={isNonMobileScreens ? "row" : "column"} alignItems="center" justifyContent="space-between">
         <Box width={isNonMobileScreens ? "45%" : "93%"} padding="2rem" margin="2rem auto" borderRadius="1.5rem">
         <Box display="flex" flexDirection="column" gap="20px" marginBottom="20px">
