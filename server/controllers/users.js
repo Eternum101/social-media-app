@@ -65,7 +65,7 @@ export const addRemoveFriend = async (req, res) => {
         const { id } = req.params;
         const user = await User.findById(id);
 
-        const picturePath = req.file.filename;
+        const picturePath = req.file ? req.file.cloudStoragePublicUrl : '';
 
         user.picturePath = picturePath;
         await user.save();

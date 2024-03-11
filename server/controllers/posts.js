@@ -3,8 +3,9 @@ import User from "../models/User.js";
 
 export const createPost = async (req, res) => {
     try {
-        const { userId, description, picturePath } = req.body;
+        const { userId, description } = req.body;
         const user = await User.findById(userId);
+        const picturePath = req.file ? req.file.cloudStoragePublicUrl : '';
         const newPost = new Post({
             userId,
             firstName: user.firstName,

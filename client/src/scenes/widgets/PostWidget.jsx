@@ -85,19 +85,7 @@ import {
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost }));
       setNewComment('');
-    };    
-
-    const isUrl = (path) => {
-      if (typeof path !== 'string' || path.trim() === '') {
-        return false;
-      }
-      try {
-        new URL(path);
-        return true;
-      } catch (_) {
-        return false;  
-      }
-    };    
+    };
   
     return (
       <WidgetWrapper m="2rem 0">
@@ -120,7 +108,7 @@ import {
             height="auto"
             alt="post"
             style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-            src={isUrl(picturePath) ? picturePath : `${SERVER_URL}/assets/${picturePath}`}
+            src={picturePath}
           />
         )}
         <FlexBetween mt="0.25rem">

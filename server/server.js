@@ -6,6 +6,7 @@ import multer from 'multer';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
+import admin from 'firebase-admin';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
@@ -14,6 +15,7 @@ import { register } from './controllers/auth.js';
 import { createPost } from './controllers/posts.js';
 import { verifyToken } from './middleware/auth.js';
 import { updateProfilePicture } from './controllers/users.js';
+import serviceAccount from './serviceAccountKey.json' assert { type: 'json' };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,20 +33,47 @@ app.use(cors({
     "https://social-media-app-el95.onrender.com"],
 }));
 
-const storage = multer.diskStorage( {
-    destination: function (req, file, cb) {
-        cb(null, "public/assets");
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket:"social-media-app-storage-8a9d8.appspot.com"
+})
+
+const bucket = admin.storage().bucket();
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+async function uploadToFirebase(req, res, next) {
+    if (!req.file) {
+        return next();
     }
-}); 
 
-const upload = multer({ storage }); 
+    const blob = bucket.file(req.file.originalname);
+    const blobStream = blob.createWriteStream({
+        metadata: {
+            contentType: req.file.mimetype
+        }
+    });
 
-app.post("/auth/register", upload.single("picture"), register);
-app.post("/posts", verifyToken, upload.single("picture"), createPost);
-app.patch("/users/:id/updateProfilePicture", verifyToken, upload.single('picture'), updateProfilePicture);
+    blobStream.on('error', (err) => {
+        req.file.cloudStorageError = err;
+        next(err);
+    });
+
+    blobStream.on('finish', () => {
+        req.file.cloudStoragePublicUrl = getPublicUrl(req.file.originalname);
+        next();
+    });
+
+    blobStream.end(req.file.buffer);
+}
+
+function getPublicUrl(filename) {
+    return `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filename)}?alt=media`;
+}
+
+app.post("/auth/register", upload.single("picture"), uploadToFirebase, register);
+app.post("/posts", verifyToken, upload.single("picture"), uploadToFirebase, createPost);
+app.patch("/users/:id/updateProfilePicture", verifyToken, upload.single('picture'), uploadToFirebase, updateProfilePicture);
 
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
