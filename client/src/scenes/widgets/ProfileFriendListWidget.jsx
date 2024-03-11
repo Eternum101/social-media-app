@@ -31,7 +31,7 @@ const ProfileFriendListWidget = ({ userId, friends }) => {
   
   useEffect(() => {
     getProfileFriends();
-  }, [getProfileFriends]);  
+  }, [getProfileFriends, friends]);  
 
   return (
     <WidgetWrapper>
