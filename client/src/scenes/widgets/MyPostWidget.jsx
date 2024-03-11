@@ -80,7 +80,7 @@ import {
         dispatch(setPosts({ posts }));
         setImage(null);
         setPost("");
-        setIsLoading(false);
+        setIsLoading(false); 
     }
 
     return (
