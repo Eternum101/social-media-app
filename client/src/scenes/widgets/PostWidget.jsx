@@ -120,7 +120,7 @@ import {
             height="auto"
             alt="post"
             style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-            src={isUrl(picturePath) ? picturePath : `/assets/${picturePath}`}
+            src={isUrl(picturePath) ? picturePath : `${SERVER_URL}/assets/${picturePath}`}
           />
         )}
         <FlexBetween mt="0.25rem">
