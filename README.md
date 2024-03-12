@@ -37,7 +37,6 @@ A Social Media Website that primarily focuses on interactions between each user.
 [Back to Top](#social-media-app)
 
 ## Built With
-- Firebase
 
 ![image](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 
