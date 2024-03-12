@@ -1,6 +1,6 @@
 # Social Media App
 
-🔗 [View Demo](https://social-media-app-el95.onrender.com/)
+🔗 [View Demo](https://social-media-app-el95.onrender.com/) (**Please Allow Up to 50 Seconds for Website to Load from Cold Start**)
 
 ## Table of Contents
 - [About The Project](#about-the-project)
